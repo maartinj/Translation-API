@@ -23,6 +23,7 @@
 		BB6DC8902C87BA16001697B8 /* ScanAndTranslateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6DC88F2C87BA16001697B8 /* ScanAndTranslateView.swift */; };
 		BB7B36052C8645B2007940D9 /* MultipleTranslationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7B36042C8645B2007940D9 /* MultipleTranslationsView.swift */; };
 		BBC2F73D2C86516E006E49B2 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC2F73C2C865168006E49B2 /* Review.swift */; };
+		E437DEA42CC06E2A00F4721D /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E437DEA32CC06E2A00F4721D /* TranslationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		BB6DC88F2C87BA16001697B8 /* ScanAndTranslateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanAndTranslateView.swift; sourceTree = "<group>"; };
 		BB7B36042C8645B2007940D9 /* MultipleTranslationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleTranslationsView.swift; sourceTree = "<group>"; };
 		BBC2F73C2C865168006E49B2 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		E437DEA32CC06E2A00F4721D /* TranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 			children = (
 				BB343C262C85076800BE2AF5 /* Translation_DemoApp.swift */,
 				BB271AAD2C85550B008C4CA7 /* StartTab.swift */,
+				E437DEA32CC06E2A00F4721D /* TranslationService.swift */,
 				BB6DC8912C87BBE6001697B8 /* TabViews */,
 				BB6DC8922C87BC06001697B8 /* Models */,
 				BB6DC88E2C87B9AB001697B8 /* ScanText Files */,
@@ -206,6 +209,7 @@
 				BB6DC8902C87BA16001697B8 /* ScanAndTranslateView.swift in Sources */,
 				BBC2F73D2C86516E006E49B2 /* Review.swift in Sources */,
 				BB343C2D2C85078F00BE2AF5 /* FlexibleTranslationView.swift in Sources */,
+				E437DEA42CC06E2A00F4721D /* TranslationService.swift in Sources */,
 				BB343C2A2C85076800BE2AF5 /* BasicTranslationView.swift in Sources */,
 				BB271AAE2C85550B008C4CA7 /* StartTab.swift in Sources */,
 				BB343C2B2C85076800BE2AF5 /* Translation_DemoApp.swift in Sources */,
