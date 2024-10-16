@@ -8,6 +8,7 @@
 import Foundation
 import Translation
 
+@Observable
 class TranslationService {
     var translatedText = ""
 }
