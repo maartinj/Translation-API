@@ -15,12 +15,12 @@
 
 import SwiftUI
 import Translation
+import AVFoundation
 
 struct FlexibleTranslationView: View {
     @Environment(TranslationService.self) var translationService
     @State private var textToTranslate = ""
     @FocusState private var focusState: Bool
-    @State private var translatedText = ""
     @State private var targetLanguage = Locale.Language(
         languageCode: "en",
         script: nil,
@@ -55,8 +55,10 @@ struct FlexibleTranslationView: View {
                     }
                 }
                 .onChange(of: targetLanguage) { oldValue, newValue in
-                    configuration?.invalidate()
-                    configuration = TranslationSession.Configuration(source: targetLanguage)
+                    if newValue != oldValue {
+                        configuration?.invalidate()
+                        configuration = TranslationSession.Configuration(target: targetLanguage)
+                    }
                 }
                 HStack {
                     Button("Translate", systemImage: "translate") {
@@ -68,11 +70,15 @@ struct FlexibleTranslationView: View {
                     .disabled(textToTranslate.isEmpty)
                     Spacer()
                     Button {
-                        
+                        let utterance = AVSpeechUtterance(string: translationService.translatedText)
+                        utterance.voice = AVSpeechSynthesisVoice(
+                            language: targetLanguage.languageCode?.debugDescription
+                        )
+                        AVSpeechSynthesizer().speak(utterance)
                     } label: {
                         Image(systemName: "speaker.wave.2.bubble")
                     }
-                    .disabled(translatedText.isEmpty)
+                    .disabled(translationService.translatedText.isEmpty)
                 }
             }
             .toolbar {
@@ -90,6 +96,7 @@ struct FlexibleTranslationView: View {
     }
     
     func triggerTranslation() {
+        print("Trigger translation")
         if configuration == nil {
             configuration = TranslationSession.Configuration(target: targetLanguage)
         } else {
