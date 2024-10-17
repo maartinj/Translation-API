@@ -15,19 +15,34 @@
 
 import SwiftUI
 
+// continue 11:58
+
 struct FlexibleTranslationView: View {
+    @Environment(TranslationService.self) var translationService
     @State private var textToTranslate = ""
     @FocusState private var focusState: Bool
     @State private var translatedText = ""
+    @State private var targetLanguage = Locale.Language(
+        languageCode: "en",
+        script: nil,
+        region: "US"
+    )
+    
     var body: some View {
         NavigationStack {
             Form {
                 TextField("Text to translate", text: $textToTranslate, axis: .vertical)
                     .focused($focusState)
                     .textFieldStyle(.roundedBorder)
-                Text(translatedText)
+                Text(translationService.translatedText)
                     .italic()
                     .textSelection(.enabled)
+                Picker("Target Language", selection: $targetLanguage) {
+                    ForEach(translationService.availableLanguages) { language in
+                        Text(language.localizedName())
+                            .tag(language.locale)
+                    }
+                }
                 HStack {
                     Button("Translate", systemImage: "translate") {
                         focusState = false
@@ -61,5 +76,6 @@ struct FlexibleTranslationView: View {
 
 #Preview {
     FlexibleTranslationView()
+        .environment(TranslationService())
 }
 
