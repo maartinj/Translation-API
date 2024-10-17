@@ -18,6 +18,7 @@ import VisionKit
 struct DataScannerVC: UIViewControllerRepresentable {
     @Binding var scannedText: String
     @Binding var liveScan: Bool
+    var triggerTranslation: (() -> Void)? = nil
     
     func makeUIViewController(context: Context) -> DataScannerViewController {
         let viewController = DataScannerViewController(recognizedDataTypes: [.text()],
@@ -31,6 +32,9 @@ struct DataScannerVC: UIViewControllerRepresentable {
         if liveScan {
             try? uiViewController.startScanning()
         } else {
+            if let triggerTranslation {
+                triggerTranslation()
+            }
             uiViewController.stopScanning()
         }
     }
