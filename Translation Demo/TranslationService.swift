@@ -26,4 +26,9 @@ class TranslationService {
             .sorted()
         }
     }
+    
+    func translate(text: String, using session: TranslationSession) async throws {
+        let response = try await session.translate(text)
+        translatedText = response.targetText
+    }
 }

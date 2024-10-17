@@ -14,8 +14,7 @@
 
 
 import SwiftUI
-
-// continue 11:58
+import Translation
 
 struct FlexibleTranslationView: View {
     @Environment(TranslationService.self) var translationService
@@ -27,6 +26,7 @@ struct FlexibleTranslationView: View {
         script: nil,
         region: "US"
     )
+    @State private var configuration: TranslationSession.Configuration?
     
     var body: some View {
         NavigationStack {
@@ -37,14 +37,30 @@ struct FlexibleTranslationView: View {
                 Text(translationService.translatedText)
                     .italic()
                     .textSelection(.enabled)
+                    .translationTask(configuration) { session in
+                        do {
+                            try await translationService.translate(
+                                text: textToTranslate,
+                                using: session
+                            )
+                        } catch {
+                            translationService.translatedText = ""
+                            print(error.localizedDescription)
+                        }
+                    }
                 Picker("Target Language", selection: $targetLanguage) {
                     ForEach(translationService.availableLanguages) { language in
                         Text(language.localizedName())
                             .tag(language.locale)
                     }
                 }
+                .onChange(of: targetLanguage) { oldValue, newValue in
+                    configuration?.invalidate()
+                    configuration = TranslationSession.Configuration(source: targetLanguage)
+                }
                 HStack {
                     Button("Translate", systemImage: "translate") {
+                        triggerTranslation()
                         focusState = false
                     }
                     .buttonStyle(.borderedProminent)
@@ -70,6 +86,14 @@ struct FlexibleTranslationView: View {
                 }
             }
             .navigationTitle("Flexible Translation")
+        }
+    }
+    
+    func triggerTranslation() {
+        if configuration == nil {
+            configuration = TranslationSession.Configuration(target: targetLanguage)
+        } else {
+            configuration?.invalidate()
         }
     }
 }
