@@ -32,7 +32,8 @@ struct MultipleTranslationsView: View {
             }
             .translationTask(configuration) { session in
                 do {
-                    try await translationService.translateAllAtOnce(using: session)
+//                    try await translationService.translateAllAtOnce(using: session)
+                    try await translationService.translateSequence(using: session)
                 } catch {
                     print(error.localizedDescription)
                 }

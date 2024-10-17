@@ -54,4 +54,18 @@ class TranslationService {
             }
         }
     }
+    
+    func translateSequence(using session: TranslationSession) async throws {
+        Task { @MainActor in
+            let requests: [TranslationSession.Request] = reviews.map { review in
+                    .init(sourceText: review.comment, clientIdentifier: review.id.uuidString)
+            }
+            for try await response in session.translate(batch: requests) {
+                guard let id = UUID(uuidString: response.clientIdentifier ?? "") else { continue }
+                if let index = reviews.firstIndex(where: { $0.id == id }) {
+                    reviews[index].translatedComment = response.targetText
+                }
+            }
+        }
+    }
 }
